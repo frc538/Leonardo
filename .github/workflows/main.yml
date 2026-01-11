@@ -35,15 +35,3 @@ jobs:
         version: 0.0.${{ github.run_id }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: ./gradlew publish -PprojVersion="$version"
-
-    - name: Create Release
-      id: create_release
-      uses: comnoco/create-release@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-        version: 0.0.${{ github.run_id }}
-      with:
-        tag_name: $version
-        release_name: $version
-        draft: false
-        prerelease: false
