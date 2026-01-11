@@ -118,7 +118,7 @@ publishing {
   publications {
     mavenJava(MavenPublication) {
       groupId = 'org.frc538'
-      artifactId = 'doc'
+      artifactId = 'leonardo'
       version = project.version
 
       from components.java
