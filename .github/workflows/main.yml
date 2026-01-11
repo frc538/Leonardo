@@ -32,6 +32,16 @@ jobs:
 
     - name: Publish package
       env:
-        Version: 0.0.${{ github.run_id }}
+        version: 0.0.${{ github.run_id }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: ./gradlew publish -PprojVersion="$Version"
+      run: ./gradlew publish -PprojVersion="$version"
+
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        version: 0.0.${{ github.run_id }}
+        run: |
+          gh release create "$version" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${version#v}" \
+              --generate-notes
