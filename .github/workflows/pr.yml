@@ -29,4 +29,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Compile and run tests on robot code
-      run: ./gradlew build
+      env:
+        Version: 0.0.${{ github.run_id }}
+
+      run: ./gradlew build -PprojVersion="$Version"
