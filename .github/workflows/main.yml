@@ -23,11 +23,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Set up GitHub CLI
-      uses: actions/setup-gh@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
@@ -38,12 +33,7 @@ jobs:
     - name: Compile and run tests on robot code
       run: ./gradlew build
       
-    - name: Create release
-      env:
-        version: 0.0.${{ github.run_id }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh release create "$version" \
-            --repo="$GITHUB_REPOSITORY" \
-            --title="${version#v}" \
-            --generate-notes
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: 0.0.${{ github.run_id }}
