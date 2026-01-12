@@ -32,13 +32,7 @@ jobs:
 
     - name: Compile and run tests on robot code
       run: ./gradlew build
-
-    - name: Publish package
-      env:
-        version: 0.0.${{ github.run_id }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: ./gradlew publish -PprojVersion="$version"
-
+      
     - name: Create release
       env:
         version: 0.0.${{ github.run_id }}
