@@ -8,6 +8,9 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -35,3 +38,13 @@ jobs:
         version: 0.0.${{ github.run_id }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: ./gradlew publish -PprojVersion="$version"
+
+    - name: Create release
+      env:
+        version: 0.0.${{ github.run_id }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$version" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${version#v}" \
+              --generate-notes
